@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: "Autonomous Examination Results | R.V.R. & J.C. College of Engineering",
   description:
     "Autonomous Examination Results portal for R.V.R. & J.C. College of Engineering.",
+  icons: {
+    icon: "/Images/footer.png",
+    shortcut: "/Images/footer.png",
+    apple: "/Images/footer.png",
+  },
 };
 
 export default function RootLayout({
