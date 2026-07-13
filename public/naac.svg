@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="32" viewBox="0 0 60 32">
+  <rect width="60" height="32" rx="2" fill="#fff" stroke="#D9230F" stroke-width="1"/>
+  <text x="30" y="14" text-anchor="middle" font-family="Arial" font-size="6" fill="#003B7A" font-weight="bold">NAAC</text>
+  <text x="30" y="24" text-anchor="middle" font-family="Arial" font-size="8" fill="#D9230F" font-weight="bold">A+</text>
+</svg>

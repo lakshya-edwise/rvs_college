@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="32" viewBox="0 0 50 32">
+  <rect width="50" height="32" rx="2" fill="#fff" stroke="#005BAC" stroke-width="1"/>
+  <text x="25" y="14" text-anchor="middle" font-family="Arial" font-size="6" fill="#005BAC" font-weight="bold">TUV</text>
+  <text x="25" y="24" text-anchor="middle" font-family="Arial" font-size="6" fill="#005BAC">SUD</text>
+</svg>

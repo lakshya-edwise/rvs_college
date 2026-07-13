@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="90" viewBox="0 0 120 90">
+  <rect width="120" height="90" rx="4" fill="#003B7A"/>
+  <text x="60" y="30" text-anchor="middle" font-family="Arial" font-size="10" fill="#FFD700" font-weight="bold">CELEBRATING</text>
+  <text x="60" y="55" text-anchor="middle" font-family="Arial" font-size="28" fill="#FFD700" font-weight="bold">41</text>
+  <text x="60" y="72" text-anchor="middle" font-family="Arial" font-size="9" fill="#fff">YEARS</text>
+  <text x="60" y="84" text-anchor="middle" font-family="Arial" font-size="7" fill="#ccc">1985 - 2026</text>
+</svg>

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="32" viewBox="0 0 50 32">
+  <rect width="50" height="32" rx="2" fill="#fff" stroke="#005BAC" stroke-width="1"/>
+  <text x="25" y="20" text-anchor="middle" font-family="Arial" font-size="10" fill="#005BAC" font-weight="bold">NBA</text>
+</svg>
