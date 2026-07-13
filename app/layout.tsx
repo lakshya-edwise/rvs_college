@@ -7,7 +7,7 @@ import "./print.css";
 export const metadata: Metadata = {
   title: "Autonomous Examination Results | R.V.R. & J.C. College of Engineering",
   description:
-    "Demonstration examination results portal with dummy data only. Not connected to any real examination system.",
+    "Autonomous Examination Results portal for R.V.R. & J.C. College of Engineering.",
 };
 
 export default function RootLayout({

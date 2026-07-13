@@ -4,16 +4,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Home, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { UnavailableMenuButton } from "@/components/UnavailableMenuButton";
 import { navMenuItems } from "@/lib/nav-menu";
 
 function DropdownPanel({
   items,
   sections,
+  onItemClick,
 }: {
   items?: string[];
   sections?: string[][];
+  onItemClick: () => void;
 }) {
   const isLong = !!sections?.length;
+  const itemClassName =
+    "block w-full text-left whitespace-nowrap px-4 py-1.5 text-[13px] text-black hover:bg-gray-100";
 
   return (
     <div
@@ -22,12 +27,13 @@ function DropdownPanel({
       }`}
     >
       {items?.map((item) => (
-        <span
+        <UnavailableMenuButton
           key={item}
-          className="block cursor-default whitespace-nowrap px-4 py-1.5 text-[13px] text-black hover:bg-gray-100"
+          className={itemClassName}
+          onClick={onItemClick}
         >
           {item}
-        </span>
+        </UnavailableMenuButton>
       ))}
       {sections?.map((section, sectionIndex) => (
         <div key={sectionIndex}>
@@ -35,12 +41,13 @@ function DropdownPanel({
             <div className="my-1 border-t border-portal-border" />
           )}
           {section.map((item) => (
-            <span
+            <UnavailableMenuButton
               key={item}
-              className="block cursor-default whitespace-nowrap px-4 py-1.5 text-[13px] text-black hover:bg-gray-100"
+              className={itemClassName}
+              onClick={onItemClick}
             >
               {item}
-            </span>
+            </UnavailableMenuButton>
           ))}
         </div>
       ))}
@@ -55,6 +62,8 @@ export function Navbar() {
 
   const hasSubmenu = (item: (typeof navMenuItems)[number]) =>
     !!(item.children?.length || item.sections?.length);
+
+  const closeMobileMenu = () => setMobileOpen(false);
 
   return (
     <nav className="bg-portal-darkBlue print:hidden">
@@ -85,18 +94,33 @@ export function Navbar() {
                 onMouseEnter={() => hasSubmenu(item) && setOpenDropdown(item.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <Link
-                  href={item.href ?? "#"}
-                  className="flex items-center gap-0.5 whitespace-nowrap px-2.5 py-1.5 text-[13px] font-bold text-white transition-colors hover:bg-white/10"
-                >
-                  {item.label}
-                  {hasSubmenu(item) && (
+                {hasSubmenu(item) ? (
+                  <button
+                    type="button"
+                    className="flex items-center gap-0.5 whitespace-nowrap px-2.5 py-1.5 text-[13px] font-bold text-white transition-colors hover:bg-white/10"
+                  >
+                    {item.label}
                     <ChevronDown size={10} className="mt-px fill-white" />
-                  )}
-                </Link>
+                  </button>
+                ) : item.href ? (
+                  <Link
+                    href={item.href}
+                    className="flex items-center gap-0.5 whitespace-nowrap px-2.5 py-1.5 text-[13px] font-bold text-white transition-colors hover:bg-white/10"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <UnavailableMenuButton className="flex items-center gap-0.5 whitespace-nowrap px-2.5 py-1.5 text-[13px] font-bold text-white transition-colors hover:bg-white/10">
+                    {item.label}
+                  </UnavailableMenuButton>
+                )}
 
                 {hasSubmenu(item) && openDropdown === item.label && (
-                  <DropdownPanel items={item.children} sections={item.sections} />
+                  <DropdownPanel
+                    items={item.children}
+                    sections={item.sections}
+                    onItemClick={() => setOpenDropdown(null)}
+                  />
                 )}
               </li>
             ))}
@@ -147,12 +171,13 @@ export function Navbar() {
                         {openMobileSection === item.label && (
                           <div className="mb-2 ml-3 border-l border-white/30 pl-3">
                             {item.children?.map((child) => (
-                              <span
+                              <UnavailableMenuButton
                                 key={child}
-                                className="block py-1.5 text-[12px] text-white/90"
+                                className="block w-full py-1.5 text-left text-[12px] text-white/90"
+                                onClick={closeMobileMenu}
                               >
                                 {child}
-                              </span>
+                              </UnavailableMenuButton>
                             ))}
                             {item.sections?.map((section, sectionIndex) => (
                               <div key={sectionIndex}>
@@ -160,26 +185,34 @@ export function Navbar() {
                                   <div className="my-1 border-t border-white/20" />
                                 )}
                                 {section.map((child) => (
-                                  <span
+                                  <UnavailableMenuButton
                                     key={child}
-                                    className="block py-1.5 text-[12px] text-white/90"
+                                    className="block w-full py-1.5 text-left text-[12px] text-white/90"
+                                    onClick={closeMobileMenu}
                                   >
                                     {child}
-                                  </span>
+                                  </UnavailableMenuButton>
                                 ))}
                               </div>
                             ))}
                           </div>
                         )}
                       </>
-                    ) : (
+                    ) : item.href ? (
                       <Link
-                        href={item.href ?? "#"}
+                        href={item.href}
                         className="flex items-center py-2 text-[13px] font-bold text-white hover:bg-white/10"
-                        onClick={() => setMobileOpen(false)}
+                        onClick={closeMobileMenu}
                       >
                         {item.label}
                       </Link>
+                    ) : (
+                      <UnavailableMenuButton
+                        className="flex w-full items-center py-2 text-left text-[13px] font-bold text-white hover:bg-white/10"
+                        onClick={closeMobileMenu}
+                      >
+                        {item.label}
+                      </UnavailableMenuButton>
                     )}
                   </li>
                 ))}

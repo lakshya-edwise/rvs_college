@@ -1,12 +1,15 @@
+"use client";
+
+import { UnavailableMenuButton } from "./UnavailableMenuButton";
+
 function SocialIcon({ children, label }: { children: React.ReactNode; label: string }) {
   return (
-    <a
-      href="#"
+    <UnavailableMenuButton
       aria-label={label}
       className="text-white transition-opacity hover:opacity-75"
     >
       {children}
-    </a>
+    </UnavailableMenuButton>
   );
 }
 

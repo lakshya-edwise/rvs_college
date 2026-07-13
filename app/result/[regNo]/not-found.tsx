@@ -7,8 +7,7 @@ export default function ResultNotFound() {
         Student Not Found
       </h1>
       <p className="mb-6 text-[13px] text-[#666666]">
-        No student record exists for the provided registration number. This
-        portal uses dummy data only.
+        No student record exists for the provided registration number.
       </p>
       <Link
         href="/"

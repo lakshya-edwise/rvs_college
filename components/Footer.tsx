@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {
   cityOffice,
@@ -5,6 +7,7 @@ import {
   footerLinkColumns,
 } from "@/lib/footer-data";
 import { SocialMediaIcons } from "./SocialMediaIcons";
+import { UnavailableMenuButton } from "./UnavailableMenuButton";
 
 const MAP_EMBED_URL =
   "https://maps.google.com/maps?q=R.V.R.%26%20J.C.%20College%20of%20Engineering%2C%20Guntur%2C%20Andhra%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed";
@@ -22,13 +25,13 @@ function FooterLinkList({
       <ul className="space-y-1">
         {links.map((link) => (
           <li key={link.label}>
-            <span
-              className={`cursor-default text-[12px] leading-snug hover:underline ${
+            <UnavailableMenuButton
+              className={`text-left text-[12px] leading-snug hover:underline ${
                 link.highlight ? "text-[#ffcc00]" : "text-white"
               }`}
             >
               {link.label}
-            </span>
+            </UnavailableMenuButton>
           </li>
         ))}
       </ul>
@@ -106,13 +109,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="border-t border-white/10 py-3 text-center">
-        <p className="text-[10px] text-white/60">
-          Demonstration Portal — Dummy Data Only. Not connected to any real
-          examination system.
-        </p>
       </div>
     </footer>
   );
