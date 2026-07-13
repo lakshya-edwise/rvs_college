@@ -4,82 +4,58 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Home, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { getStudentByHallTicket } from "@/lib/dummy-data";
-import { getStudentByHallTicketPdf } from "@/lib/pdf-student-data";
-import { generateNotFoundPdf } from "@/lib/generate-not-found-pdf";
 import { Input } from "@/components/ui/input";
+import { getStudentByRegNoPdf } from "@/lib/pdf-student-data";
+import type { ConsolidatedStudent } from "@/types/grades";
 
-const hallTicketSchema = z.object({
-  hallTicket: z.string().min(1, "Hall Ticket cannot be empty."),
+const regNoSchema = z.object({
+  regNo: z.string().min(1, "Registration Number cannot be empty."),
 });
 
-type HallTicketFormData = z.infer<typeof hallTicketSchema>;
+type RegNoFormData = z.infer<typeof regNoSchema>;
 
-interface HallTicketFormProps {
-  examId?: string;
+interface RegNoSearchFormProps {
   buttonVariant?: "blue" | "red";
+  placeholder?: string;
+  onStudentFound: (student: ConsolidatedStudent) => void;
 }
 
-export function HallTicketForm({
-  examId,
+export function RegNoSearchForm({
   buttonVariant = "blue",
-}: HallTicketFormProps) {
-  const router = useRouter();
+  placeholder = "Registration Number",
+  onStudentFound,
+}: RegNoSearchFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [notFoundMessage, setNotFoundMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<HallTicketFormData>({
-    resolver: zodResolver(hallTicketSchema),
-    defaultValues: { hallTicket: "" },
+  } = useForm<RegNoFormData>({
+    resolver: zodResolver(regNoSchema),
+    defaultValues: { regNo: "" },
   });
 
-  const onSubmit = async (data: HallTicketFormData) => {
-    const ticket = data.hallTicket.trim();
-    const student = getStudentByHallTicket(ticket);
-    const pdfStudent = getStudentByHallTicketPdf(ticket);
-
-    setNotFoundMessage(null);
+  const onSubmit = async (data: RegNoFormData) => {
+    const regNo = data.regNo.trim();
+    setErrorMessage(null);
     setIsLoading(true);
 
-    if (pdfStudent && !student) {
-      setTimeout(() => {
-        const examParam = examId ? `?exam=${encodeURIComponent(examId)}` : "";
-        router.push(`/?tab=consolidated&regNo=${pdfStudent.regNo}${examParam}`);
-      }, 600);
-      return;
-    }
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
+    const student = getStudentByRegNoPdf(regNo);
     if (!student) {
-      try {
-        const opened = await generateNotFoundPdf({
-          hallTicket: ticket,
-          examId,
-        });
-        setNotFoundMessage(
-          opened
-            ? `${ticket.toUpperCase()} is not registered for this examination. The report has been opened in a new tab.`
-            : "Popup blocked. Please allow popups for this site to view the report.",
-        );
-      } catch {
-        setNotFoundMessage("Unable to generate the not-registered PDF report.");
-      } finally {
-        setIsLoading(false);
-      }
+      setErrorMessage("No student found.");
+      setIsLoading(false);
       return;
     }
 
-    setTimeout(() => {
-      const examParam = examId ? `?exam=${encodeURIComponent(examId)}` : "";
-      router.push(`/result/${student.regNo}${examParam}`);
-    }, 600);
+    onStudentFound(student);
+    setIsLoading(false);
   };
 
   return (
@@ -90,7 +66,7 @@ export function HallTicketForm({
       className="mx-auto w-full max-w-lg border border-portal-border p-6"
     >
       <h2 className="mb-5 text-center text-[15px] font-bold text-portal-green">
-        Enter Valid HallTicket Number
+        Enter Valid Registration Number
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -102,8 +78,8 @@ export function HallTicketForm({
             <Home size={16} />
           </Link>
           <Input
-            {...register("hallTicket")}
-            placeholder="HallTicket Number"
+            {...register("regNo")}
+            placeholder={placeholder}
             className="h-9 flex-1 rounded-none border-0 text-[13px] shadow-none focus-visible:ring-0"
           />
           <button
@@ -126,15 +102,15 @@ export function HallTicketForm({
           </button>
         </div>
 
-        {errors.hallTicket && (
+        {errors.regNo && (
           <p className="mt-2 text-center text-[12px] text-red-600">
-            {errors.hallTicket.message}
+            {errors.regNo.message}
           </p>
         )}
 
-        {notFoundMessage && (
+        {errorMessage && (
           <p className="mt-2 text-center text-[12px] font-semibold text-red-600">
-            {notFoundMessage}
+            {errorMessage}
           </p>
         )}
       </form>

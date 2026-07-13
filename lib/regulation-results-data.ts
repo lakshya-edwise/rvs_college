@@ -117,6 +117,53 @@ export const regulations: RegulationData[] = [
     ],
   },
   {
+    id: "Y19",
+    label: "Y19",
+    headerLabel: "Y19 Results Details",
+    results: [
+      {
+        title:
+          "B.Tech., Semester VIII [Fourth Year] (Y19), Regular Examination - May-2023",
+        releaseDate: "10-07-2023",
+      },
+      {
+        title:
+          "B.Tech., Semester VII [Fourth Year] (Y19), Regular Examination - January-2023",
+        releaseDate: "18-03-2023",
+      },
+      {
+        title:
+          "B.Tech., Semester VI [Third Year] (Y19), Regular Examination - September-2022",
+        releaseDate: "08-12-2022",
+      },
+      {
+        title:
+          "B.Tech., Semester V [Third Year] (Y19), Regular Examination - April-2022",
+        releaseDate: "11-07-2022",
+      },
+      {
+        title:
+          "B.Tech., Semester IV [Second Year] (Y19), Regular Examination - October-2021",
+        releaseDate: "14-12-2021",
+      },
+      {
+        title:
+          "B.Tech., Semester III [Second Year] (Y19), Regular Examination - April-2021",
+        releaseDate: "09-07-2021",
+      },
+      {
+        title:
+          "B.Tech., Semester II [First Year] (Y19), Regular Examination - October-2020",
+        releaseDate: "22-12-2020",
+      },
+      {
+        title:
+          "B.Tech., Semester I [First Year] (Y19), Regular Examination - October-2020",
+        releaseDate: "18-10-2020",
+      },
+    ],
+  },
+  {
     id: "R20",
     label: "R20",
     headerLabel: "R20 Results Details",
